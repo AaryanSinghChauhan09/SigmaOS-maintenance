@@ -1,31 +1,39 @@
-// SPDX-License-Identifier: Apache-2.0
-//! SigmaOS-maintenance - Multimedia/Office/Networking component
-//! Part of SigmaOS multi-repository architecture
+//! SigmaOS-maintenance - SigmaOS Component
+//!
+//! Development and system tools for SigmaOS.
 
-#![no_std]
+use anyhow::Result;
+use log::info;
+use serde::{Deserialize, Serialize};
 
-/// Component
-pub struct Component {
-    name: &'static str,
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Config {
+    pub enabled: bool,
+    pub auto_start: bool,
 }
 
-impl Component {
-    pub fn new() -> Self {
-        Self { name: "SigmaOS-maintenance" }
-    }
-}
-
-impl Default for Component {
+impl Default for Config {
     fn default() -> Self {
-        Self::new()
+        Self { enabled: true, auto_start: true }
     }
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_creation() {
-        let c = super::Component::new();
-        assert_eq!(c.name, "SigmaOS-maintenance");
+pub struct maintenance {
+    config: Config,
+}
+
+impl maintenance {
+    pub fn new(config: Config) -> Self {
+        Self { config }
+    }
+
+    pub fn initialize(&mut self) -> Result<()> {
+        info!("Initializing SigmaOS-maintenance");
+        Ok(())
+    }
+
+    pub fn run(&mut self) -> Result<()> {
+        info!("Running SigmaOS-maintenance");
+        Ok(())
     }
 }
